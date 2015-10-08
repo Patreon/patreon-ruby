@@ -1,5 +1,7 @@
 # patreon-ruby
-Interact with the Patreon API via OAuth
+Interact with the Patreon API via OAuth.
+
+Get the gem from [RubyGems](https://rubygems.org/gems/patreon)
 
 Step 1. Get your client_id and client_secret
 ---
@@ -19,7 +21,7 @@ class OAuthController < ApplicationController
     oauth_client = Patreon::OAuth.new(client_id, client_secret)
     tokens = oauth_client.get_tokens(params[:code], redirect_uri)
     access_token = tokens['access_token']
-    
+
     api_client = Patreon::API.new(access_token)
     user_response = api_client.fetch_user()
     @user = user_response['data']
