@@ -11,8 +11,12 @@ module Patreon
       get_json('current_user')
     end
 
-    def fetch_campaign_and_patrons(access_token)
+    def fetch_campaign_and_patrons()
       get_json('current_user/campaigns?include=rewards,creator,goals,pledges')
+    end
+
+    def fetch_campaign()
+      get_json('current_user/campaigns?include=rewards,creator,goals')
     end
 
     private
