@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = "patreon"
-  gem.version       = "0.0.6"
+  gem.version       = "0.1.0"
   gem.authors       = ["David Kettler"]
   gem.email         = ["david@patreon.com"]
   gem.description   = "Interact with the Patreon API via OAuth"

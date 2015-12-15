@@ -1,4 +1,5 @@
 require 'net/http'
+require 'cgi'
 require 'json'
 
 module Patreon
@@ -17,6 +18,12 @@ module Patreon
 
     def fetch_campaign()
       get_json('current_user/campaigns?include=rewards,creator,goals')
+    end
+
+    def fetch_page_of_pledges(campaign_id, page_size, cursor=nil)
+      url = "campaigns/#{campaign_id}/pledges?page%5Bcount%5D=#{CGI::escape(page_size.to_s)}"
+      url += "&page%5Bcursor%5D=#{CGI::escape(cursor.to_s)}" if cursor
+      get_json(url)
     end
 
     private
