@@ -5,7 +5,7 @@ Get the gem from [RubyGems](https://rubygems.org/gems/patreon)
 
 Step 1. Get your client_id and client_secret
 ---
-Visit the [OAuth Documentation Page](patreon.com/oauth2/documentation)
+Visit the [OAuth Documentation Page](https://patreon.com/oauth2/documentation)
 while logged in as a Patreon creator to register your client.
 
 This will provide you with a `client_id` and a `client_secret`.
