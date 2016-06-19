@@ -2,6 +2,7 @@ require 'net/http'
 require 'cgi'
 require 'json'
 require_relative '../jsonapi/url_util'
+require_relative './schemas/campaign'
 
 module Patreon
   class API
@@ -14,12 +15,12 @@ module Patreon
     end
 
     def fetch_campaign(includes=nil, fields=nil)
-      includes ||= ['rewards','creator','goals','pledges']
       get_json(JSONAPI::URLUtil.build_url('current_user/campaigns',includes,fields))
     end
 
     def fetch_campaign_and_patrons(includes=nil, fields=nil)
-      fetch_campaign(['rewards','creator','goals','pledges'])
+      includes ||= Schemas::Campaign.default_relationships + [Schemas::Campaign::Relationships::PLEDGES]
+      fetch_campaign(includes, fields)
     end
 
     def fetch_page_of_pledges(campaign_id, page_size, cursor=nil, includes=nil, fields=nil)
