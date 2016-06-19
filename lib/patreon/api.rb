@@ -1,6 +1,7 @@
 require 'net/http'
 require 'cgi'
 require 'json'
+require_relative '../jsonapi/url_util'
 
 module Patreon
   class API
@@ -8,22 +9,24 @@ module Patreon
       @access_token = access_token
     end
 
-    def fetch_user
-      get_json('current_user')
+    def fetch_user(includes=nil, fields=nil)
+      get_json(JSONAPI::URLUtil.build_url('current_user',includes,fields))
     end
 
-    def fetch_campaign_and_patrons()
-      get_json('current_user/campaigns?include=rewards,creator,goals,pledges')
+    def fetch_campaign(includes=nil, fields=nil)
+      includes ||= ['rewards','creator','goals','pledges']
+      get_json(JSONAPI::URLUtil.build_url('current_user/campaigns',includes,fields))
     end
 
-    def fetch_campaign()
-      get_json('current_user/campaigns?include=rewards,creator,goals')
+    def fetch_campaign_and_patrons(includes=nil, fields=nil)
+      fetch_campaign(['rewards','creator','goals','pledges'])
     end
 
-    def fetch_page_of_pledges(campaign_id, page_size, cursor=nil)
-      url = "campaigns/#{campaign_id}/pledges?page%5Bcount%5D=#{CGI::escape(page_size.to_s)}"
+    def fetch_page_of_pledges(campaign_id, page_size, cursor=nil, includes=nil, fields=nil)
+      url = "campaigns/#{campaign_id}/pledges"
+      url += "?page%5Bcount%5D=#{CGI::escape(page_size.to_s)}"
       url += "&page%5Bcursor%5D=#{CGI::escape(cursor.to_s)}" if cursor
-      get_json(url)
+      get_json(JSONAPI::URLUtil.build_url(url,includes,fields))
     end
 
     private
