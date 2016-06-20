@@ -1,10 +1,10 @@
-require_relative '../../enum/enum'
+require_relative '../utils/enum'
 
 module Patreon
   module Schemas
     module Pledge
       class Attributes
-        include Enum
+        include Utils::Enum
 
         define :AMOUNT_CENTS, 'amount_cents'
         define :TOTAL_HISTORICAL_AMOUNT_CENTS, 'total_historical_amount_cents'
@@ -16,7 +16,7 @@ module Patreon
       end
 
       class Relationships
-        include Enum
+        include Utils::Enum
 
         define :PATRON, 'patron'
         define :REWARD, 'reward'

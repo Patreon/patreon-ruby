@@ -1,7 +1,7 @@
 require 'net/http'
 require 'cgi'
 require 'json'
-require_relative '../jsonapi/url_util'
+require_relative './utils/jsonapi/url_util'
 require_relative './schemas/campaign'
 
 module Patreon
@@ -11,11 +11,11 @@ module Patreon
     end
 
     def fetch_user(includes=nil, fields=nil)
-      get_json(JSONAPI::URLUtil.build_url('current_user',includes,fields))
+      get_json(Utils::JSONAPI::URLUtil.build_url('current_user',includes,fields))
     end
 
     def fetch_campaign(includes=nil, fields=nil)
-      get_json(JSONAPI::URLUtil.build_url('current_user/campaigns',includes,fields))
+      get_json(Utils::JSONAPI::URLUtil.build_url('current_user/campaigns',includes,fields))
     end
 
     def fetch_campaign_and_patrons(includes=nil, fields=nil)
@@ -27,12 +27,13 @@ module Patreon
       url = "campaigns/#{campaign_id}/pledges"
       url += "?page%5Bcount%5D=#{CGI::escape(page_size.to_s)}"
       url += "&page%5Bcursor%5D=#{CGI::escape(cursor.to_s)}" if cursor
-      get_json(JSONAPI::URLUtil.build_url(url,includes,fields))
+      get_json(Patreon::Utils::JSONAPI::URLUtil.build_url(url,includes,fields))
     end
 
     private
 
     def get_json(suffix)
+      print "getting suffix #{suffix}"
       url = URI.parse("https://api.patreon.com/oauth2/api/#{suffix}")
       req = Net::HTTP::Get.new(url.to_s)
       req['Authorization'] = "Bearer #{@access_token}"

@@ -1,12 +1,11 @@
-require_relative '../../enum/enum'
+require_relative '../utils/enum'
 
 module Patreon
   module Schemas
     module Goal
       class Attributes
-        include Enum
+        include Utils::Enum
 
-        define :AMOUNT, 'amount'
         define :AMOUNT_CENTS, 'amount_cents'
         define :USER_LIMIT, 'user_limit'
         define :REMAINING, 'remaining'
@@ -18,7 +17,7 @@ module Patreon
       end
 
       class Relationships
-        include Enum
+        include Utils::Enum
 
         define :CREATOR, 'creator'
       end
@@ -26,7 +25,6 @@ module Patreon
       class << self
         def default_attributes
           [
-            Attributes::AMOUNT,
             Attributes::AMOUNT_CENTS,
             Attributes::USER_LIMIT,
             Attributes::REMAINING,

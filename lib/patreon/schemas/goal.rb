@@ -1,10 +1,10 @@
-require_relative '../../enum/enum'
+require_relative '../utils/enum'
 
 module Patreon
   module Schemas
     module Goal
       class Attributes
-        include Enum
+        include Utils::Enum
 
         define :AMOUNT_CENTS, 'amount_cents'
         define :TITLE, 'title'

@@ -1,10 +1,10 @@
-require_relative '../../enum/enum'
+require_relative '../utils/enum'
 
 module Patreon
   module Schemas
     module Campaign
       class Attributes
-        include Enum
+        include Utils::Enum
 
         define :SUMMARY, 'summary'
         define :CREATION_NAME, 'creation_name'
@@ -32,7 +32,7 @@ module Patreon
       end
 
       class Relationships
-        include Enum
+        include Utils::Enum
 
         define :REWARDS, 'rewards'
         define :CREATOR, 'creator'

@@ -1,10 +1,10 @@
-require_relative '../../enum/enum'
+require_relative '../utils/enum'
 
 module Patreon
   module Schemas
     module User
       class Attributes
-        include Enum
+        include Utils::Enum
 
         define :EMAIL, 'email'
         define :FIRST_NAME, 'first_name'
@@ -35,7 +35,7 @@ module Patreon
       end
 
       class Relationships
-        include Enum
+        include Utils::Enum
 
         define :PLEDGES, 'pledges'
         define :CARDS, 'cards'
