@@ -1,5 +1,3 @@
-require_relative '../utils/enum'
-
 module Patreon
   module Schemas
     module Campaign

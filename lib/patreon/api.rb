@@ -1,8 +1,6 @@
 require 'net/http'
 require 'cgi'
 require 'json'
-require_relative './utils/jsonapi/url_util'
-require_relative './schemas/campaign'
 
 module Patreon
   class API
