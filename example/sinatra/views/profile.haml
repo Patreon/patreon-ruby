@@ -1,0 +1,11 @@
+%h2= "Logged In!"
+
+%dl
+  %dt= "Name"
+  %dd= @user.full_name
+
+  %dt= "Email"
+  %dd= @user.email
+
+  %dt= "Pledge Amount (in cents)"
+  %dd= @user.patreon_pledge_amount_cents
