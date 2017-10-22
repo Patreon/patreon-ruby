@@ -24,15 +24,12 @@ class OAuthController < ApplicationController
 
     api_client = Patreon::API.new(access_token)
     user_response = api_client.fetch_user()
-    @user = user_response['data']
-    included = user_response['included']
-    if included
-      @pledge = included.find {|obj| obj['type'] == 'pledge' && obj['relationships']['creator']['data']['id'] == creator_id}
-      @campaign = included.find {|obj| obj['type'] == 'campaign' && obj['relationships']['creator']['data']['id'] == creator_id}
-    else
-      @pledge = nil
-      @campaign = nil
-    end
+    # user_response uses [json-api-vanilla](https://github.com/trainline/json-api-vanilla) for easy usage
+    @user = user_response.data
+    # you can list all attributes and relationships with (@user.methods - Object.methods)
+    @pledge = @user.pledges[0]
+    # just like with @user, you can list all pledge attributes and relationships with (@pledge.methods - Object.methods)
+    @pledge_amount = @pledge.amount_cents
   end
 end
 ```
