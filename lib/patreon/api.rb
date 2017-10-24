@@ -1,6 +1,7 @@
 require 'net/http'
 require 'cgi'
 require 'json'
+require 'json-api-vanilla'
 
 module Patreon
   class API
@@ -35,7 +36,7 @@ module Patreon
       req = Net::HTTP::Get.new(url.to_s)
       req['Authorization'] = "Bearer #{@access_token}"
       res = Net::HTTP.start(url.host, url.port, :use_ssl => true) {|http| http.request(req)}
-      JSON.parse(res.body)
+      return JSON::Api::Vanilla.parse(res.body)
     end
   end
 end
