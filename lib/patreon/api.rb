@@ -2,6 +2,7 @@ require 'net/http'
 require 'cgi'
 require 'json'
 require 'json-api-vanilla'
+require 'openssl'
 
 module Patreon
   class API
@@ -32,10 +33,17 @@ module Patreon
     private
 
     def get_json(suffix)
+      http = Net::HTTP.new("api.patreon.com", 443)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+      #SECURITY HOLE
+      http.set_debug_output($stdout) if ENV['DEBUG']
+
       url = URI.parse("https://api.patreon.com/oauth2/api/#{suffix}")
       req = Net::HTTP::Get.new(url.to_s)
       req['Authorization'] = "Bearer #{@access_token}"
-      res = Net::HTTP.start(url.host, url.port, :use_ssl => true) {|http| http.request(req)}
+      res = http.request(req)
       return JSON::Api::Vanilla.parse(res.body)
     end
   end
