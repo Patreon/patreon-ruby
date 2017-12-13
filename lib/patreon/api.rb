@@ -32,7 +32,7 @@ module Patreon
     private
 
     def get_json(suffix)
-      url = URI.parse("https://api.patreon.com/oauth2/api/#{suffix}")
+      url = URI.parse("https://www.patreon.com/api/oauth2/api/#{suffix}")
       req = Net::HTTP::Get.new(url.to_s)
       req['Authorization'] = "Bearer #{@access_token}"
       res = Net::HTTP.start(url.host, url.port, :use_ssl => true) {|http| http.request(req)}
