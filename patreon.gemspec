@@ -2,9 +2,11 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
+require 'patreon/version'
+
 Gem::Specification.new do |gem|
   gem.name          = "patreon"
-  gem.version       = "0.3.0"
+  gem.version       = Patreon::VERSION
   gem.authors       = ["Patreon"]
   gem.email         = ["david@patreon.com"]
   gem.description   = "Interact with the Patreon API via OAuth"
