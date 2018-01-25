@@ -33,16 +33,17 @@ module Patreon
     private
 
     def get_json(suffix)
-      http = Net::HTTP.new("api.patreon.com", 443)
+      http = Net::HTTP.new("www.patreon.com", 443)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
       #SECURITY HOLE
       http.set_debug_output($stdout) if ENV['DEBUG']
 
-      url = URI.parse("https://api.patreon.com/oauth2/api/#{suffix}")
+      url = URI.parse("https://www.patreon.com/api/oauth2/api/#{suffix}")
       req = Net::HTTP::Get.new(url.to_s)
       req['Authorization'] = "Bearer #{@access_token}"
+      req['User-Agent'] = Utils::Client.user_agent_string
       res = http.request(req)
       return JSON::Api::Vanilla.parse(res.body)
     end
