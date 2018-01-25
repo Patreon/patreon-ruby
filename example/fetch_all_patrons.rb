@@ -1,4 +1,4 @@
-require_relative 'lib/patreon'
+require_relative '../lib/patreon'
 require 'uri'
 require 'cgi'
 
