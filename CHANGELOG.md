@@ -1,4 +1,4 @@
-# 0.4.0 (in-progress)
+# 0.4.0
 
 * Stop shipping the lockfile
 * Update API routes to the canonical path
