@@ -1,3 +1,4 @@
+require 'rack'
 require 'net/http'
 require 'cgi'
 require 'json'
@@ -10,24 +11,26 @@ module Patreon
       @access_token = access_token
     end
 
-    def fetch_user(includes=nil, fields=nil)
-      get_parse_json(Utils::JSONAPI::URLUtil.build_url('current_user',includes,fields))
+    def fetch_user(opts = {})
+      get_parse_json(Utils::JSONAPI::URLUtil.build_url('current_user', opts[:includes], opts[:fields]))
     end
 
-    def fetch_campaign(includes=nil, fields=nil)
-      get_parse_json(Utils::JSONAPI::URLUtil.build_url('current_user/campaigns',includes,fields))
+    def fetch_campaign(opts = {})
+      get_parse_json(Utils::JSONAPI::URLUtil.build_url('current_user/campaigns', opts[:includes], opts[:fields]))
     end
 
-    def fetch_campaign_and_patrons(includes=nil, fields=nil)
-      includes ||= Schemas::Campaign.default_relationships + [Schemas::Campaign::Relationships::PLEDGES]
-      fetch_campaign(includes, fields)
+    def fetch_campaign_and_patrons(opts = {})
+      opts[:includes] = opts[:includes] ? Array(opts[:includes]) : []
+      opts[:includes].concat(Schemas::Campaign.default_relationships + [Schemas::Campaign::Relationships::PLEDGES])
+      fetch_campaign(opts)
     end
 
-    def fetch_page_of_pledges(campaign_id, page_size, cursor=nil, includes=nil, fields=nil)
-      url = "campaigns/#{campaign_id}/pledges"
-      url += "?page%5Bcount%5D=#{CGI::escape(page_size.to_s)}"
-      url += "&page%5Bcursor%5D=#{CGI::escape(cursor.to_s)}" if cursor
-      get_parse_json(Patreon::Utils::JSONAPI::URLUtil.build_url(url,includes,fields))
+    def fetch_page_of_pledges(campaign_id, opts = {})
+      params = {}
+      params["page[count]"] = opts[:count] || 10
+      params["page[cursor]"] = opts[:cursor] if opts[:cursor]
+      url = "campaigns/#{campaign_id}/pledges?#{Rack::Utils.build_query(params)}"
+      get_parse_json(Patreon::Utils::JSONAPI::URLUtil.build_url(url, opts[:includes], opts[:fields]))
     end
 
     private
