@@ -1,10 +1,3 @@
-require 'rack'
-require 'net/http'
-require 'cgi'
-require 'json'
-require 'json-api-vanilla'
-require 'openssl'
-
 module Patreon
   class API
     def initialize(access_token)
