@@ -1,9 +1,11 @@
-$: << File.dirname(__FILE__)
-
 require 'patreon/utils/jsonapi/url_util'
 require 'patreon/utils/enum'
 require 'patreon/utils/client'
+require 'patreon/schemas/campaign'
+require 'patreon/schemas/goal'
+require 'patreon/schemas/pledge'
+require 'patreon/schemas/reward'
+require 'patreon/schemas/user'
 require 'patreon/version'
-require 'patreon/schemas'
 require 'patreon/oauth'
 require 'patreon/api'
