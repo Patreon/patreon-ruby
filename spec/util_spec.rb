@@ -1,6 +1,3 @@
-require "patreon"
-require "minitest/autorun"
-
 describe Patreon::Utils::JSONAPI::URLUtil do
   describe "build_url" do
     it "should build a url" do
