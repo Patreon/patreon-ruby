@@ -1,6 +1,3 @@
-require 'net/http'
-require 'json'
-
 module Patreon
   class OAuth
     def initialize(client_id, client_secret)

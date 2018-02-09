@@ -1,28 +1,25 @@
+require 'rack'
 require 'uri'
 
 module Patreon
   module Utils
     module JSONAPI
       class URLUtil
-        def self.build_url(path, includes=nil, fields=nil)
-          connector = path.include?('?') ? '&' : '?'
-          params = {}
-          if includes
-            params.merge!({ 'include' => joined_or_null(includes) })
-          end
-          if fields
-            params.merge!(fields.reduce({}) {|memo, type_attributes|
-              type, attributes = type_attributes
-              memo.merge({ "fields[#{type}]" => joined_or_null(attributes) })
-            })
-          end
-          return "#{path}#{connector}#{URI.encode_www_form(params)}"
+        def self.build_url(url, includes=nil, fields=nil)
+          parsed_url = URI.parse(url)
+          params = parsed_url.query ? Rack::Utils.parse_query(parsed_url.query) : {}
+          params['include'] = joined_or_null(includes) if includes
+          fields.each do |name, val|
+            params["fields[#{name}]"] = val
+          end if fields
+          query = params.empty? ? "" : "?#{Rack::Utils.build_query(params)}"
+
+          "#{parsed_url.path}#{query}"
         end
 
         private
-
-        def self.joined_or_null(list)
-          list.length == 0 ? "null" : list.join(',')
+        def self.joined_or_null(list_or_string)
+          list_or_string && list_or_string.empty? ? "null" : Array(list_or_string).join(',')
         end
       end
     end
