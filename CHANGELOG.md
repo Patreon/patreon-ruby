@@ -1,3 +1,7 @@
+# 0.5.1
+
+* Fix test runner to execute tests properly
+
 # 0.5.0
 
 * Public methods now use named arguments instead of positional arguments
