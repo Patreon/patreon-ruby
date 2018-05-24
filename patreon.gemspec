@@ -25,6 +25,7 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'minitest', '~> 5.11.3'
   gem.add_development_dependency 'minitest-hooks', '~> 1.0.1'
+  gem.add_development_dependency 'minitest-ci', '~> 3.4.0'
   gem.add_development_dependency 'mocha', '~> 1.3.0'
   gem.add_development_dependency 'rake', '~> 12.3.0'
 end

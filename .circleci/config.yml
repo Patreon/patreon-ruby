@@ -29,4 +29,4 @@ jobs:
 
       # Save test results for timing analysis
       - store_test_results:
-          path: test_results
+          path: test/results
