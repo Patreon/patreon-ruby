@@ -66,6 +66,10 @@ describe Patreon::API do
   end
 
   describe "Patreon::API#fetch_page_of_pledges" do
+    before(:all) do
+      @response = File.read(File.expand_path("fixtures/fetch_campaign.json", __dir__))
+    end
+
     it "should get fetch_page_of_pledges" do
       @api.expects(:get_json).with("campaigns/123/pledges?page%5Bcount%5D=10").returns(@response)
       @api.fetch_page_of_pledges(123)

@@ -11,6 +11,7 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: circleci-demo-ruby
           RAILS_ENV: test
+          TESTOPTS: --junit --junit-filename=test/reports/report.xml
     steps:
       - checkout
 
@@ -29,4 +30,4 @@ jobs:
 
       # Save test results for timing analysis
       - store_test_results:
-          path: test_results
+          path: test/reports
