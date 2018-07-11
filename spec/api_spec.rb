@@ -1,3 +1,5 @@
+require 'json'
+
 describe Patreon::API do
   before do
     @api = Patreon::API.new("some token")
@@ -13,6 +15,27 @@ describe Patreon::API do
       response = @api.fetch_user
       assert_equal response.data.pledges.count, 5
       assert_equal response.data.vanity, "corgi"
+      assert_equal response.data.first_name, "Corgi"
+    end
+
+    it "should get current_user and the user should be mutable" do
+      @api.expects(:get_json).with("current_user").returns(@response)
+      response = @api.fetch_user
+      assert_equal response.data.pledges.count, 5
+      assert_equal response.data.vanity, "corgi"
+      assert_equal response.data.first_name, "Corgi"
+      response.data.first_name = "Jack"
+      assert_equal response.data.first_name, "Jack"
+    end
+
+    it "should get current_user correctly if field is nil" do
+      munged_response = JSON.parse(@response)
+      munged_response['data']['attributes']['first_name'] = nil
+      @api.expects(:get_json).with("current_user").returns(munged_response.to_json)
+      response = @api.fetch_user
+      assert_equal response.data.pledges.count, 5
+      assert_equal response.data.vanity, "corgi"
+      assert_nil response.data.first_name
     end
 
     it "should get current_user with includes" do
