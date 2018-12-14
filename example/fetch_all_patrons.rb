@@ -23,7 +23,7 @@ campaign_id = campaign_response.data[0].id
 all_pledges = []
 cursor = nil
 while true do
-    page_response = api_client.fetch_page_of_pledges(campaign_id, 25, cursor)
+    page_response = api_client.fetch_page_of_pledges(campaign_id, { :count => 25, :cursor => cursor })
     all_pledges += page_response.data
     next_page_link = page_response.links[page_response.data]['next']
     if next_page_link
