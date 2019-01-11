@@ -11,8 +11,10 @@ while logged in as a Patreon creator to register your client.
 This will provide you with a `client_id` and a `client_secret`.
 
 Step 2. Use this library
+
+e.g. [the example Sinatra app in this repo](example/sinatra/README.md) or the Rails route example below.
+
 ---
-e.g., in a Rails route
 ```ruby
 require 'patreon'
 
