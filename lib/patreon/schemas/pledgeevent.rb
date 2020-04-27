@@ -4,23 +4,25 @@
 
 module Patreon
   module Schemas
-    module Goal
-      Name = 'goal'
+    module PledgeEvent
+      Name = 'pledgeevent'
 
       class Attributes
         include Utils::Enum
 
+        define :TYPE, 'type'
+        define :DATE, 'date'
+        define :PAYMENT_STATUS, 'payment_status'
+        define :TIER_TITLE, 'tier_title'
+        define :TIER_ID, 'tier_id'
         define :AMOUNT_CENTS, 'amount_cents'
-        define :TITLE, 'title'
-        define :DESCRIPTION, 'description'
-        define :CREATED_AT, 'created_at'
-        define :REACHED_AT, 'reached_at'
-        define :COMPLETED_PERCENTAGE, 'completed_percentage'
+        define :CURRENCY_CODE, 'currency_code'
       end
 
       class Relationships
         include Utils::Enum
 
+        define :PATRON, 'patron'
         define :CAMPAIGN, 'campaign'
       end
     end
