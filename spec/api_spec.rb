@@ -47,7 +47,6 @@ describe Patreon::API do
     it "should return data" do
       resource_id = "32187"
       expected_url = "campaigns"
-      expected_url += "?page%5Bcount%5D=10"
       @api.expects(:get_json).with(expected_url).returns(@response)
       response = @api.get_campaigns()
       assert_equal response.data.id, resource_id
@@ -76,7 +75,6 @@ describe Patreon::API do
     it "should return data" do
       resource_id = "32187"
       expected_url = "webhooks"
-      expected_url += "?page%5Bcount%5D=10"
       @api.expects(:get_json).with(expected_url).returns(@response)
       response = @api.get_webhooks()
       assert_equal response.data.id, resource_id
@@ -90,8 +88,7 @@ describe Patreon::API do
 
     it "should return data" do
       resource_id = "32187"
-      expected_url = "campaigns/{}/members".gsub('{}', resource_id)
-      expected_url += "?page%5Bcount%5D=10"
+      expected_url = "campaigns/#{resource_id}/members"
       @api.expects(:get_json).with(expected_url).returns(@response)
       response = @api.get_campaigns_by_id_members(resource_id)
       assert_equal response.data.id, resource_id
@@ -105,7 +102,7 @@ describe Patreon::API do
 
     it "should return data" do
       resource_id = "32187"
-      expected_url = "campaigns/{}".gsub('{}', resource_id)
+      expected_url = "campaigns/#{resource_id}"
       @api.expects(:get_json).with(expected_url).returns(@response)
       response = @api.get_campaigns_by_id(resource_id)
       assert_equal response.data.id, resource_id
@@ -119,7 +116,7 @@ describe Patreon::API do
 
     it "should return data" do
       resource_id = "32187"
-      expected_url = "webhooks/{}".gsub('{}', resource_id)
+      expected_url = "webhooks/#{resource_id}"
       @api.expects(:get_json).with(expected_url).returns(@response)
       response = @api.get_webhooks_by_id(resource_id)
       assert_equal response.data.id, resource_id
@@ -133,7 +130,7 @@ describe Patreon::API do
 
     it "should return data" do
       resource_id = "32187"
-      expected_url = "members/{}".gsub('{}', resource_id)
+      expected_url = "members/#{resource_id}"
       @api.expects(:get_json).with(expected_url).returns(@response)
       response = @api.get_members_by_id(resource_id)
       assert_equal response.data.id, resource_id

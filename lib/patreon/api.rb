@@ -5,11 +5,11 @@
 module Patreon
   class API
     include Patreon::Utils::JSONAPI
-    
+
     def initialize(access_token)
       @access_token = access_token
     end
-    
+
     def get_campaigns(opts = {})
         base_url = "campaigns"
         url = URLUtil.build_url(base_url, opts[:includes], opts[:fields], opts[:count], opts[:cursor])
@@ -29,25 +29,25 @@ module Patreon
     end
 
     def get_campaigns_by_id_members(resource_id, opts = {})
-        base_url = "campaigns/{}/members".gsub('{}', resource_id)
+        base_url = "campaigns/#{resource_id}/members"
         url = URLUtil.build_url(base_url, opts[:includes], opts[:fields], opts[:count], opts[:cursor])
         get_parse_json(url)
     end
 
     def get_campaigns_by_id(resource_id, opts = {})
-        base_url = "campaigns/{}".gsub('{}', resource_id)
+        base_url = "campaigns/#{resource_id}"
         url = URLUtil.build_url(base_url, opts[:includes], opts[:fields])
         get_parse_json(url)
     end
 
     def get_webhooks_by_id(resource_id, opts = {})
-        base_url = "webhooks/{}".gsub('{}', resource_id)
+        base_url = "webhooks/#{resource_id}"
         url = URLUtil.build_url(base_url, opts[:includes], opts[:fields])
         get_parse_json(url)
     end
 
     def get_members_by_id(resource_id, opts = {})
-        base_url = "members/{}".gsub('{}', resource_id)
+        base_url = "members/#{resource_id}"
         url = URLUtil.build_url(base_url, opts[:includes], opts[:fields])
         get_parse_json(url)
     end

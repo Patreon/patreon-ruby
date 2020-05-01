@@ -3,9 +3,9 @@ Interact with the Patreon API via OAuth.
 
 ## Important notice about updating to 1.0.0 from earlier versions
 
-Patreon Ruby library version 1.0.0 moves on to Patreon's v2 API, which is not compatible with old v1 calls. Therefore directly upgrading from older versions to 1.0.0 would break compatibility of your installation. APIv1 will be deprecated some time soon after APIv2 come out of beta, so its important to get your integration compatible with API v2. 
+Patreon Ruby library version 1.0.0 moves on to Patreon's v2 API, which is not compatible with old v1 calls. Therefore directly upgrading from older versions to 1.0.0 would break compatibility of your installation. APIv1 will be deprecated some time soon after APIv2 comes out of beta, so it's important to get your integration compatible with API v2. 
 
-For more information on the differences/similarities between v1 and v2 please check: https://docs.patreon.com/#what-39-s-new
+For more information on the differences and similarities between v1 and v2, check out: https://docs.patreon.com/#what-39-s-new
 
 ## Getting started
 
@@ -73,8 +73,8 @@ User = Patreon::Schemas::User
 Member = Patreon::Schemas::Member
 
 patron_response = api_client.get_identity({
-    'includes': [User::Relationships::MEMBERSHIPS],
-    'fields': {
+    includes: [User::Relationships::MEMBERSHIPS],
+    fields: {
         User::Name => User::Attributes::FIRST_NAME,
         Member::Name => Member::Attributes::LIFETIME_SUPPORT_CENTS
     }

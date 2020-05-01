@@ -30,14 +30,9 @@ describe Patreon::Utils::JSONAPI::URLUtil do
       assert_equal url, "/?page%5Bcount%5D=20"
     end
     
-    it "should build a url with a default count" do
-      url = Patreon::Utils::JSONAPI::URLUtil.build_url("/", nil, nil, nil)
-      assert_equal url, "/?page%5Bcount%5D=10"
-    end
-    
     it "should build a url with a cursor" do
       url = Patreon::Utils::JSONAPI::URLUtil.build_url("/", nil, nil, nil, "1234")
-      assert_equal url, "/?page%5Bcount%5D=10&page%5Bcursor%5D=1234"
+      assert_equal url, "/?page%5Bcursor%5D=1234"
     end
 
     it "should merge with a pre-existing querystring" do
