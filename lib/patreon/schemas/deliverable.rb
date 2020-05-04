@@ -4,24 +4,24 @@
 
 module Patreon
   module Schemas
-    module Goal
-      Name = 'goal'
+    module Deliverable
+      Name = 'deliverable'
 
       class Attributes
         include Utils::Enum
 
-        define :AMOUNT_CENTS, 'amount_cents'
-        define :TITLE, 'title'
-        define :DESCRIPTION, 'description'
-        define :CREATED_AT, 'created_at'
-        define :REACHED_AT, 'reached_at'
-        define :COMPLETED_PERCENTAGE, 'completed_percentage'
+        define :COMPLETED_AT, 'completed_at'
+        define :DELIVERY_STATUS, 'delivery_status'
+        define :DUE_AT, 'due_at'
       end
 
       class Relationships
         include Utils::Enum
 
         define :CAMPAIGN, 'campaign'
+        define :BENEFIT, 'benefit'
+        define :MEMBER, 'member'
+        define :USER, 'user'
       end
     end
   end

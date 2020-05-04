@@ -1,3 +1,8 @@
+# 1.0.0
+
+* **Breaking** Library moved to use Patreon API v2 endpoints and calls
+* A good part of the code is now generated based on the Platform API's Cartographer schema definition.
+
 # 0.5.1
 
 * Fix test runner to execute tests properly

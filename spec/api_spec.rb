@@ -1,3 +1,7 @@
+# This file is auto-generated from the same code that generates
+# https://docs.patreon.com. Community pull requests against this
+# file may not be accepted.
+
 require 'json'
 
 describe Patreon::API do
@@ -5,97 +9,132 @@ describe Patreon::API do
     @api = Patreon::API.new("some token")
   end
 
-  describe "Patreon::API#fetch_user" do
+  describe "Patreon::API" do
     before(:all) do
       @response = File.read(File.expand_path("fixtures/current_user.json", __dir__))
     end
 
-    it "should get current_user" do
-      @api.expects(:get_json).with("current_user").returns(@response)
-      response = @api.fetch_user
+    it "should parse data" do
+      @api.expects(:get_json).with("identity").returns(@response)
+      response = @api.get_identity
       assert_equal response.data.pledges.count, 5
       assert_equal response.data.vanity, "corgi"
       assert_equal response.data.first_name, "Corgi"
     end
 
-    it "should get current_user and the user should be mutable" do
-      @api.expects(:get_json).with("current_user").returns(@response)
-      response = @api.fetch_user
-      assert_equal response.data.pledges.count, 5
-      assert_equal response.data.vanity, "corgi"
+    it "should allow mutating data" do
+      @api.expects(:get_json).with("identity").returns(@response)
+      response = @api.get_identity
       assert_equal response.data.first_name, "Corgi"
       response.data.first_name = "Jack"
       assert_equal response.data.first_name, "Jack"
     end
 
-    it "should get current_user correctly if field is nil" do
+    it "should support nill value" do
       munged_response = JSON.parse(@response)
       munged_response['data']['attributes']['first_name'] = nil
-      @api.expects(:get_json).with("current_user").returns(munged_response.to_json)
-      response = @api.fetch_user
-      assert_equal response.data.pledges.count, 5
-      assert_equal response.data.vanity, "corgi"
+      @api.expects(:get_json).with("identity").returns(munged_response.to_json)
+      response = @api.get_identity
       assert_nil response.data.first_name
     end
-
-    it "should get current_user with includes" do
-      @api.expects(:get_json).with("current_user?include=hello").returns(@response)
-      @api.fetch_user(includes: "hello")
-    end
-
-    it "should get current_user with fields" do
-      @api.expects(:get_json).with("current_user?fields%5Bhello%5D=there").returns(@response)
-      @api.fetch_user(fields: {hello: "there"})
-    end
   end
 
-  describe "Patreon::API#fetch_campaign" do
+  describe "Patreon::API#get_campaigns" do
     before(:all) do
-      @response = File.read(File.expand_path("fixtures/fetch_campaign.json", __dir__))
+      @response = File.read(File.expand_path("fixtures/current_user.json", __dir__))
     end
 
-    it "should get fetch_campaign" do
-      @api.expects(:get_json).with("current_user/campaigns").returns(@response)
-      response = @api.fetch_campaign
-      assert_equal response.data.count, 1
-      assert_equal response.data[0].creation_name, "an unforgettable high school experience"
-    end
-
-    it "should get fetch_campaign with includes" do
-      @api.expects(:get_json).with("current_user/campaigns?include=hello").returns(@response)
-      @api.fetch_campaign(includes: "hello")
-    end
-
-    it "should get fetch_campaign with fields" do
-      @api.expects(:get_json).with("current_user/campaigns?fields%5Bhello%5D=there").returns(@response)
-      @api.fetch_campaign(fields: {hello: "there"})
+    it "should return data" do
+      resource_id = "32187"
+      expected_url = "campaigns"
+      @api.expects(:get_json).with(expected_url).returns(@response)
+      response = @api.get_campaigns()
+      assert_equal response.data.id, resource_id
     end
   end
 
-  describe "Patreon::API#fetch_campaign_and_patrons" do
+  describe "Patreon::API#get_identity" do
     before(:all) do
-      @response = File.read(File.expand_path("fixtures/fetch_campaign.json", __dir__))
+      @response = File.read(File.expand_path("fixtures/current_user.json", __dir__))
     end
 
-    it "should get fetch_campaign_and_patrons" do
-      @api.expects(:get_json).with("current_user/campaigns?include=rewards%2Ccreator%2Cgoals%2Cpledges").returns(@response)
-      @api.fetch_campaign_and_patrons
-    end
-
-    it "should get fetch_campaign_and_patrons with more includes" do
-      @api.expects(:get_json).with("current_user/campaigns?include=doohickey%2Crewards%2Ccreator%2Cgoals%2Cpledges").returns(@response)
-      @api.fetch_campaign_and_patrons(includes: "doohickey")
+    it "should return data" do
+      resource_id = "32187"
+      expected_url = "identity"
+      @api.expects(:get_json).with(expected_url).returns(@response)
+      response = @api.get_identity()
+      assert_equal response.data.id, resource_id
     end
   end
 
-  describe "Patreon::API#fetch_page_of_pledges" do
+  describe "Patreon::API#get_webhooks" do
     before(:all) do
-      @response = File.read(File.expand_path("fixtures/fetch_campaign.json", __dir__))
+      @response = File.read(File.expand_path("fixtures/current_user.json", __dir__))
     end
 
-    it "should get fetch_page_of_pledges" do
-      @api.expects(:get_json).with("campaigns/123/pledges?page%5Bcount%5D=10").returns(@response)
-      @api.fetch_page_of_pledges(123)
+    it "should return data" do
+      resource_id = "32187"
+      expected_url = "webhooks"
+      @api.expects(:get_json).with(expected_url).returns(@response)
+      response = @api.get_webhooks()
+      assert_equal response.data.id, resource_id
     end
   end
+
+  describe "Patreon::API#get_campaigns_by_id_members" do
+    before(:all) do
+      @response = File.read(File.expand_path("fixtures/current_user.json", __dir__))
+    end
+
+    it "should return data" do
+      resource_id = "32187"
+      expected_url = "campaigns/#{resource_id}/members"
+      @api.expects(:get_json).with(expected_url).returns(@response)
+      response = @api.get_campaigns_by_id_members(resource_id)
+      assert_equal response.data.id, resource_id
+    end
+  end
+
+  describe "Patreon::API#get_campaigns_by_id" do
+    before(:all) do
+      @response = File.read(File.expand_path("fixtures/current_user.json", __dir__))
+    end
+
+    it "should return data" do
+      resource_id = "32187"
+      expected_url = "campaigns/#{resource_id}"
+      @api.expects(:get_json).with(expected_url).returns(@response)
+      response = @api.get_campaigns_by_id(resource_id)
+      assert_equal response.data.id, resource_id
+    end
+  end
+
+  describe "Patreon::API#get_webhooks_by_id" do
+    before(:all) do
+      @response = File.read(File.expand_path("fixtures/current_user.json", __dir__))
+    end
+
+    it "should return data" do
+      resource_id = "32187"
+      expected_url = "webhooks/#{resource_id}"
+      @api.expects(:get_json).with(expected_url).returns(@response)
+      response = @api.get_webhooks_by_id(resource_id)
+      assert_equal response.data.id, resource_id
+    end
+  end
+
+  describe "Patreon::API#get_members_by_id" do
+    before(:all) do
+      @response = File.read(File.expand_path("fixtures/current_user.json", __dir__))
+    end
+
+    it "should return data" do
+      resource_id = "32187"
+      expected_url = "members/#{resource_id}"
+      @api.expects(:get_json).with(expected_url).returns(@response)
+      response = @api.get_members_by_id(resource_id)
+      assert_equal response.data.id, resource_id
+    end
+  end
+
 end

@@ -4,23 +4,24 @@
 
 module Patreon
   module Schemas
-    module Goal
-      Name = 'goal'
+    module Webhook
+      Name = 'webhook'
 
       class Attributes
         include Utils::Enum
 
-        define :AMOUNT_CENTS, 'amount_cents'
-        define :TITLE, 'title'
-        define :DESCRIPTION, 'description'
-        define :CREATED_AT, 'created_at'
-        define :REACHED_AT, 'reached_at'
-        define :COMPLETED_PERCENTAGE, 'completed_percentage'
+        define :TRIGGERS, 'triggers'
+        define :URI, 'uri'
+        define :PAUSED, 'paused'
+        define :LAST_ATTEMPTED_AT, 'last_attempted_at'
+        define :NUM_CONSECUTIVE_TIMES_FAILED, 'num_consecutive_times_failed'
+        define :SECRET, 'secret'
       end
 
       class Relationships
         include Utils::Enum
 
+        define :CLIENT, 'client'
         define :CAMPAIGN, 'campaign'
       end
     end

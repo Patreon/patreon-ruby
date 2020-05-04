@@ -4,23 +4,28 @@
 
 module Patreon
   module Schemas
-    module Goal
-      Name = 'goal'
+    module Post
+      Name = 'post'
 
       class Attributes
         include Utils::Enum
 
-        define :AMOUNT_CENTS, 'amount_cents'
         define :TITLE, 'title'
-        define :DESCRIPTION, 'description'
-        define :CREATED_AT, 'created_at'
-        define :REACHED_AT, 'reached_at'
-        define :COMPLETED_PERCENTAGE, 'completed_percentage'
+        define :CONTENT, 'content'
+        define :IS_PAID, 'is_paid'
+        define :IS_PUBLIC, 'is_public'
+        define :PUBLISHED_AT, 'published_at'
+        define :URL, 'url'
+        define :EMBED_DATA, 'embed_data'
+        define :EMBED_URL, 'embed_url'
+        define :APP_ID, 'app_id'
+        define :APP_STATUS, 'app_status'
       end
 
       class Relationships
         include Utils::Enum
 
+        define :USER, 'user'
         define :CAMPAIGN, 'campaign'
       end
     end
