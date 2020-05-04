@@ -14,10 +14,15 @@ describe Patreon::Utils::JSONAPI::URLUtil do
       url = Patreon::Utils::JSONAPI::URLUtil.build_url("/", ["some", "include"])
       assert_equal url, "/?include=some%2Cinclude"
     end
-
+    
     it "should build a url with a fields" do
       url = Patreon::Utils::JSONAPI::URLUtil.build_url("/", nil, {hey: 123})
       assert_equal url, "/?fields%5Bhey%5D=123"
+    end
+    
+    it "should build a url with multiple fields" do
+      url = Patreon::Utils::JSONAPI::URLUtil.build_url("/", nil, {hey: ["one", "two"]})
+      assert_equal url, "/?fields%5Bhey%5D=one%2Ctwo"
     end
 
     it "should build a url with a fields and includes" do

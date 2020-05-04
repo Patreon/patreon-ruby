@@ -10,7 +10,7 @@ module Patreon
           params = parsed_url.query ? Rack::Utils.parse_query(parsed_url.query) : {}
           params['include'] = joined_or_null(includes) if includes
           fields.each do |name, val|
-            params["fields[#{name}]"] = val
+            params["fields[#{name}]"] = val.kind_of?(Array) ? val.join(',') : val
           end if fields
           params["page[count]"] = count if count
           params["page[cursor]"] = cursor if cursor
