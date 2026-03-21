@@ -1,4 +1,12 @@
 # patreon-ruby
+
+> [!CAUTION]
+> This package is deprecated. It uses Patreon API v1, which is deprecated and no longer maintained. This SDK will not receive further updates.
+>
+> We recommend migrating to the Patreon API v2 by integrating directly using your own HTTP client. See the [API documentation](https://docs.patreon.com) and [v1 to v2 migration overview](https://docs.patreon.com/#migrating-from-api-v1-to-api-v2) for details.
+
+---
+
 Interact with the Patreon API via OAuth.
 
 Get the gem from [RubyGems](https://rubygems.org/gems/patreon)
