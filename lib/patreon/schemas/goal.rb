@@ -1,6 +1,12 @@
+# This file is auto-generated from the same code that generates
+# https://docs.patreon.com. Community pull requests against this
+# file may not be accepted.
+
 module Patreon
   module Schemas
     module Goal
+      Name = 'goal'
+
       class Attributes
         include Utils::Enum
 
@@ -9,26 +15,13 @@ module Patreon
         define :DESCRIPTION, 'description'
         define :CREATED_AT, 'created_at'
         define :REACHED_AT, 'reached_at'
+        define :COMPLETED_PERCENTAGE, 'completed_percentage'
       end
 
       class Relationships
-      end
+        include Utils::Enum
 
-      class << self
-        def default_attributes
-          [
-            Attributes::AMOUNT_CENTS,
-            Attributes::TITLE,
-            Attributes::DESCRIPTION,
-            Attributes::CREATED_AT,
-            Attributes::REACHED_AT,
-          ]
-        end
-
-        def default_relationships
-          [
-          ]
-        end
+        define :CAMPAIGN, 'campaign'
       end
     end
   end

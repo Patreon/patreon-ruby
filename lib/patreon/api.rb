@@ -1,29 +1,55 @@
+# This file is auto-generated from the same code that generates
+# https://docs.patreon.com. Community pull requests against this
+# file may not be accepted.
+
 module Patreon
   class API
+    include Patreon::Utils::JSONAPI
+
     def initialize(access_token)
       @access_token = access_token
     end
 
-    def fetch_user(opts = {})
-      get_parse_json(Utils::JSONAPI::URLUtil.build_url('current_user', opts[:includes], opts[:fields]))
+    def get_campaigns(opts = {})
+        base_url = "campaigns"
+        url = URLUtil.build_url(base_url, opts[:includes], opts[:fields], opts[:count], opts[:cursor])
+        get_parse_json(url)
     end
 
-    def fetch_campaign(opts = {})
-      get_parse_json(Utils::JSONAPI::URLUtil.build_url('current_user/campaigns', opts[:includes], opts[:fields]))
+    def get_identity(opts = {})
+        base_url = "identity"
+        url = URLUtil.build_url(base_url, opts[:includes], opts[:fields])
+        get_parse_json(url)
     end
 
-    def fetch_campaign_and_patrons(opts = {})
-      opts[:includes] = opts[:includes] ? Array(opts[:includes]) : []
-      opts[:includes].concat(Schemas::Campaign.default_relationships + [Schemas::Campaign::Relationships::PLEDGES])
-      fetch_campaign(opts)
+    def get_webhooks(opts = {})
+        base_url = "webhooks"
+        url = URLUtil.build_url(base_url, opts[:includes], opts[:fields], opts[:count], opts[:cursor])
+        get_parse_json(url)
     end
 
-    def fetch_page_of_pledges(campaign_id, opts = {})
-      params = {}
-      params["page[count]"] = opts[:count] || 10
-      params["page[cursor]"] = opts[:cursor] if opts[:cursor]
-      url = "campaigns/#{campaign_id}/pledges?#{Rack::Utils.build_query(params)}"
-      get_parse_json(Patreon::Utils::JSONAPI::URLUtil.build_url(url, opts[:includes], opts[:fields]))
+    def get_campaigns_by_id_members(resource_id, opts = {})
+        base_url = "campaigns/#{resource_id}/members"
+        url = URLUtil.build_url(base_url, opts[:includes], opts[:fields], opts[:count], opts[:cursor])
+        get_parse_json(url)
+    end
+
+    def get_campaigns_by_id(resource_id, opts = {})
+        base_url = "campaigns/#{resource_id}"
+        url = URLUtil.build_url(base_url, opts[:includes], opts[:fields])
+        get_parse_json(url)
+    end
+
+    def get_webhooks_by_id(resource_id, opts = {})
+        base_url = "webhooks/#{resource_id}"
+        url = URLUtil.build_url(base_url, opts[:includes], opts[:fields])
+        get_parse_json(url)
+    end
+
+    def get_members_by_id(resource_id, opts = {})
+        base_url = "members/#{resource_id}"
+        url = URLUtil.build_url(base_url, opts[:includes], opts[:fields])
+        get_parse_json(url)
     end
 
     private
@@ -43,7 +69,7 @@ module Patreon
       #SECURITY HOLE
       http.set_debug_output($stdout) if ENV['DEBUG']
 
-      req = Net::HTTP::Get.new("/api/oauth2/api/#{suffix}")
+      req = Net::HTTP::Get.new("/api/oauth2/v2/#{suffix}")
       req['Authorization'] = "Bearer #{@access_token}"
       req['User-Agent'] = Utils::Client.user_agent_string
       http.request(req).body

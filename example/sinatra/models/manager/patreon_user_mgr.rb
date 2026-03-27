@@ -11,30 +11,36 @@ class PatreonUserManager
     api_client = Patreon::API.new(patreon_access_token)
 
     # Get the patron's profile info and pledge amount
-    user_response = api_client.fetch_user()
+    user_response = api_client.get_identity({
+      # In v2 you need to specify the fields that you are requesting
+      includes: [Patreon::Schemas::User::Relationships::MEMBERSHIPS],
+      fields: {
+        Patreon::Schemas::User::Name => [
+          Patreon::Schemas::User::Attributes::FULL_NAME,
+          Patreon::Schemas::User::Attributes::EMAIL,
+        ],
+        Patreon::Schemas::Member::Name => [
+          Patreon::Schemas::Member::Attributes::LIFETIME_SUPPORT_CENTS
+        ]
+    }
+    })
     patreon_user_data = user_response.data
     return nil unless patreon_user_data
 
     # Find or make the user, and set their information using the API response
     db_user = User.first_or_create({:patreon_user_id => patreon_user_data.id})
-    db_user.update({
+    update_data = {
       :full_name => patreon_user_data.full_name,
       :email => patreon_user_data.email,
       :patreon_refresh_token => patreon_refresh_token,
       :patreon_access_token => patreon_access_token
-    })
-
-    # Find the user's pledge to us, and if they have one, update their pledge amount in our db
-    # puts user_response.data.methods
-    pledges = (user_response.find_all('pledge') || [])
-    pledge = pledges.find {|obj|
-      obj.creator.id == MyConfig::PATREON_CREATOR_ID
     }
-    if pledge
-      db_user.update({
-          :patreon_pledge_amount_cents => pledge.amount_cents
-      })
+    # If you request `memberships` and DON’T have the `identity.memberships` scope, 
+    # you will receive data about the user’s membership to your campaign.
+    if patreon_user_data.memberships.length > 0
+      update_data[:lifetime_support_cents] = patreon_user_data.memberships[0].lifetime_support_cents
     end
+    db_user.update(update_data)
 
     # Return the user we've made or updated
     return db_user

@@ -1,6 +1,12 @@
+# This file is auto-generated from the same code that generates
+# https://docs.patreon.com. Community pull requests against this
+# file may not be accepted.
+
 module Patreon
   module Schemas
     module Campaign
+      Name = 'campaign'
+
       class Attributes
         include Utils::Enum
 
@@ -10,73 +16,37 @@ module Patreon
         define :ONE_LINER, 'one_liner'
         define :MAIN_VIDEO_EMBED, 'main_video_embed'
         define :MAIN_VIDEO_URL, 'main_video_url'
-        define :IMAGE_SMALL_URL, 'image_small_url'
         define :IMAGE_URL, 'image_url'
+        define :IMAGE_SMALL_URL, 'image_small_url'
         define :THANKS_VIDEO_URL, 'thanks_video_url'
         define :THANKS_EMBED, 'thanks_embed'
         define :THANKS_MSG, 'thanks_msg'
         define :IS_MONTHLY, 'is_monthly'
+        define :HAS_RSS, 'has_rss'
+        define :HAS_SENT_RSS_NOTIFY, 'has_sent_rss_notify'
+        define :RSS_FEED_TITLE, 'rss_feed_title'
+        define :RSS_ARTWORK_URL, 'rss_artwork_url'
         define :IS_NSFW, 'is_nsfw'
         define :IS_CHARGED_IMMEDIATELY, 'is_charged_immediately'
-        define :IS_CHARGE_UPFRONT_ELIGIBLE, 'is_charge_upfront_eligible'
-        define :IS_PLURAL, 'is_plural'
         define :CREATED_AT, 'created_at'
         define :PUBLISHED_AT, 'published_at'
         define :PLEDGE_URL, 'pledge_url'
-        define :PLEDGE_SUM, 'pledge_sum'
         define :PATRON_COUNT, 'patron_count'
-        define :CREATION_COUNT, 'creation_count'
-        define :OUTSTANDING_PAYMENT_AMOUNT_CENTS, 'outstanding_payment_amount_cents'
+        define :DISCORD_SERVER_ID, 'discord_server_id'
+        define :GOOGLE_ANALYTICS_ID, 'google_analytics_id'
+        define :SHOW_EARNINGS, 'show_earnings'
+        define :VANITY, 'vanity'
+        define :URL, 'url'
       end
 
       class Relationships
         include Utils::Enum
 
-        define :REWARDS, 'rewards'
+        define :TIERS, 'tiers'
         define :CREATOR, 'creator'
+        define :BENEFITS, 'benefits'
         define :GOALS, 'goals'
-        define :PLEDGES, 'pledges'
-        define :CURRENT_USER_PLEDGE, 'current_user_pledge'
-        define :POST_AGGREGATION, 'post_aggregation'
-        define :CATEGORIES, 'categories'
-        define :PREVIEW_TOKEN, 'preview_token'
-      end
-
-      class << self
-        def default_attributes
-          [
-            Attributes::SUMMARY,
-            Attributes::CREATION_NAME,
-            Attributes::PAY_PER_NAME,
-            Attributes::ONE_LINER,
-            Attributes::MAIN_VIDEO_EMBED,
-            Attributes::MAIN_VIDEO_URL,
-            Attributes::IMAGE_SMALL_URL,
-            Attributes::IMAGE_URL,
-            Attributes::THANKS_VIDEO_URL,
-            Attributes::THANKS_EMBED,
-            Attributes::THANKS_MSG,
-            Attributes::IS_MONTHLY,
-            Attributes::IS_NSFW,
-            Attributes::IS_CHARGED_IMMEDIATELY,
-            Attributes::IS_PLURAL,
-            Attributes::CREATED_AT,
-            Attributes::PUBLISHED_AT,
-            Attributes::PLEDGE_URL,
-            Attributes::PLEDGE_SUM,
-            Attributes::PATRON_COUNT,
-            Attributes::CREATION_COUNT,
-            Attributes::OUTSTANDING_PAYMENT_AMOUNT_CENTS,
-          ]
-        end
-
-        def default_relationships
-          [
-            Relationships::REWARDS,
-            Relationships::CREATOR,
-            Relationships::GOALS,
-          ]
-        end
+        define :CAMPAIGN_INSTALLATIONS, 'campaign_installations'
       end
     end
   end
